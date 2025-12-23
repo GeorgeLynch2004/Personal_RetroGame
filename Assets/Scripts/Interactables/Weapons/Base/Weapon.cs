@@ -100,8 +100,20 @@ namespace Interactables.Weapons
             
             isEquipped = false;
             transform.SetParent(null);
-            Vector3 dropPosition = transform.position + Vector3.forward * 2f;
+            
+            // Reset rotation
+            Vector3 eulerAngles = transform.rotation.eulerAngles;
+            eulerAngles.x = 0;
+            eulerAngles.z = 0;
+            transform.rotation = Quaternion.Euler(eulerAngles);
+
+            // Drop position
+            Vector3 dropPosition =
+                transform.position +
+                transform.forward;
+
             transform.position = dropPosition;
+            
             collider.enabled = true;
             rigidbody.isKinematic = false;
         }
