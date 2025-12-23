@@ -26,7 +26,7 @@ public class FirstPersonCameraRotation : MonoBehaviour
     {
         rootTransform = transform.root; // assign once for efficiency
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()

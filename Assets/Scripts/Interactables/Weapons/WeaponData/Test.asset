@@ -16,7 +16,7 @@ MonoBehaviour:
   cooldown: 1
   prefab: {fileID: 0}
   useSound: {fileID: 0}
-  useTrigger: Use
+  overrideController: {fileID: 22100000, guid: 03f07e865eb6243eb9078c13cf526b5f, type: 2}
   range: 4
   damage: -10
   layerMask:

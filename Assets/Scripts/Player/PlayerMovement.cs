@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveInput;
     private bool jumpRequested;
     private bool isGrounded;
+    private Vector3 lastFramePosition;
 
     private void Start()
     {
@@ -28,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
         
         if (animatorController == null)
             Debug.LogError($"{name} missing PlayerAnimatorController");
+        
+        lastFramePosition = transform.position;
     }
 
     private void Update()
@@ -52,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
             jumpRequested = true;
         
         if (!jumpRequested)
-            animatorController.SetMovementSpeed(rigidBody.linearVelocity.magnitude);
+            animatorController.SetMovementSpeed(Mathf.RoundToInt(Vector3.Distance(transform.position,lastFramePosition)/Time.fixedDeltaTime));
     }
 
     private void FixedUpdate()
@@ -66,18 +69,19 @@ public class PlayerMovement : MonoBehaviour
         // Jump
         if (jumpRequested && isGrounded)
         {
-            animatorController.PlayJump(true);
+            animatorController.PlayJump();
             rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
         jumpRequested = false;
-        animatorController.PlayJump(false);
 
         // Clamp horizontal speed
         ClampHorizontalSpeed();
         
         // Apply manual physics
         rigidBody.AddForce(Physics.gravity * gravityMultiplier, ForceMode.Acceleration);
+        
+        lastFramePosition = transform.position; 
     }
 
     private void UpdateGroundedStatus()

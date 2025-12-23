@@ -53,7 +53,16 @@ namespace Interactables.Weapons
         protected virtual IEnumerator UseRoutine()
         {
             onCooldown = true;
-            animatorController?.PlayUse();
+
+            if (animatorController != null)
+            {
+                animatorController.PlayUse();
+            }
+            else
+            {
+                Debug.LogError($"{name} missing AnimatorController");
+            }
+            
             
             GameObject hitObject = raycastInteractor.PerformRaycast(data.range, data.layerMask);
 
@@ -91,6 +100,8 @@ namespace Interactables.Weapons
             
             isEquipped = false;
             transform.SetParent(null);
+            Vector3 dropPosition = transform.position + Vector3.forward * 2f;
+            transform.position = dropPosition;
             collider.enabled = true;
             rigidbody.isKinematic = false;
         }

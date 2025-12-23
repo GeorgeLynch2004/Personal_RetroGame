@@ -26,9 +26,9 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.SetFloat(SpeedHash, speed);
     }
 
-    public void PlayJump(bool state)
+    public void PlayJump()
     {
-        animator.SetBool(JumpHash, state);
+        animator.SetTrigger(JumpHash);
     }
 
     public void ApplyOverride(RuntimeAnimatorController controller)
